@@ -411,5 +411,82 @@ code {
   color: var(--text);
 }
 
+/* BudgetOverview Styles */
+.budget-overview-container {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.budget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.budget-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0;
+}
+
+.budget-subtitle {
+  font-size: 12px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.budget-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px 28px;
+}
+
+.budget-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.budget-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.budget-category-label {
+  color: var(--text-h);
+}
+
+.budget-values {
+  color: var(--text);
+}
+
+.budget-values.over-budget {
+  color: #e85d3a;
+  font-weight: 600;
+}
+
+.budget-progress-track {
+  height: 6px;
+  background: var(--code-bg);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.budget-progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease-out, background-color 0.3s;
+}
+
+
 
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Navbar from "./components/Navbar";
 import FilterBar from "./components/FilterBar";
 import SummaryCards from "./components/SummaryCards";
+import BudgetOverview from "./components/BudgetOverview";
 import "./App.css";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           setCustomTo={setCustomTo}
         />
         <SummaryCards />
+        <BudgetOverview />
       </div>
     </>
   );
