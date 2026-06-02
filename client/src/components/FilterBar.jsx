@@ -1,5 +1,16 @@
 import React from "react";
 
+const DEFAULT_CATEGORIES = ["Food", "Transport", "Bills", "Entertainment", "Shopping", "Health", "Other"];
+const DEFAULT_ICONS = {
+  Food: "🍜",
+  Transport: "🚌",
+  Bills: "📄",
+  Entertainment: "🎬",
+  Shopping: "🛍️",
+  Health: "💊",
+  Other: "📦",
+};
+
 export default function FilterBar({
   filterRange = "this_month",
   setFilterRange,
@@ -15,6 +26,9 @@ export default function FilterBar({
   onOpenBudgets,
   today = () => new Date().toISOString().split("T")[0]
 }) {
+  const activeCategories = categories && categories.length > 0 ? categories : DEFAULT_CATEGORIES;
+  const activeIcons = catIcons && Object.keys(catIcons).length > 0 ? catIcons : DEFAULT_ICONS;
+
   return (
     <div className="filter-bar-container">
       <div className="filter-group">
@@ -62,9 +76,9 @@ export default function FilterBar({
             className="filter-select"
           >
             <option value="All">All categories</option>
-            {categories.map((c) => (
+            {activeCategories.map((c) => (
               <option key={c} value={c}>
-                {catIcons[c] ? `${catIcons[c]} ${c}` : c}
+                {activeIcons[c] ? `${activeIcons[c]} ${c}` : c}
               </option>
             ))}
           </select>

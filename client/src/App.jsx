@@ -1,18 +1,33 @@
-import { useState } from 'react'
-
-import Navbar from './components/Navbar'
-import FilterBar from './components/FilterBar'
-import './App.css'
+import { useState } from "react";
+import Navbar from "./components/Navbar";
+import FilterBar from "./components/FilterBar";
+import SummaryCards from "./components/SummaryCards";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [filterRange, setFilterRange] = useState("this_month");
+  const [filterCat, setFilterCat] = useState("All");
+  const [customFrom, setCustomFrom] = useState("");
+  const [customTo, setCustomTo] = useState("");
 
   return (
     <>
       <Navbar />
-      <FilterBar />
+      <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto", width: "100%", boxSizing: "border-box" }}>
+        <FilterBar
+          filterRange={filterRange}
+          setFilterRange={setFilterRange}
+          filterCat={filterCat}
+          setFilterCat={setFilterCat}
+          customFrom={customFrom}
+          setCustomFrom={setCustomFrom}
+          customTo={customTo}
+          setCustomTo={setCustomTo}
+        />
+        <SummaryCards />
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
