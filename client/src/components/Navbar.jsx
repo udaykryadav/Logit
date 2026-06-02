@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function Navbar() {
+export default function Navbar({ onAddExpense }) {
   const [theme, setTheme] = useState(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("theme");
@@ -40,6 +40,9 @@ export default function Navbar() {
       </div>
 
       <div className="navbar-actions">
+        <button onClick={onAddExpense} className="btn-primary">
+          + Add Expense
+        </button>
         <button onClick={toggleTheme} className="theme-toggle-btn" aria-label="Toggle theme">
           {theme === "dark" ? "☀️" : "🌙"}
         </button>

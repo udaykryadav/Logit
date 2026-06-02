@@ -13,7 +13,7 @@ function App() {
 
   return (
     <>
-      <Navbar />
+      <Navbar onAddExpense={() => console.log("Add Expense clicked")} />
       <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto", width: "100%", boxSizing: "border-box" }}>
         <FilterBar
           filterRange={filterRange}
