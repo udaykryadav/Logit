@@ -234,3 +234,136 @@ code {
   justify-content: center;
 }
 
+/* FilterBar Styles */
+.filter-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 14px 20px;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.filter-group,
+.action-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.action-group {
+  margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  .action-group {
+    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+.select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.filter-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 36px 8px 12px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.filter-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-bg);
+}
+
+.select-arrow {
+  position: absolute;
+  right: 12px;
+  font-size: 8px;
+  color: var(--text);
+  pointer-events: none;
+  user-select: none;
+}
+
+.custom-date-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-date-input {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 12px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.filter-date-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-bg);
+}
+
+.date-separator {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.btn-secondary {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-h);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.2s, border-color 0.2s, transform 0.1s;
+}
+
+.btn-secondary:hover {
+  background-color: var(--code-bg);
+  border-color: var(--text);
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+.btn-icon {
+  font-size: 14px;
+}
+
+
