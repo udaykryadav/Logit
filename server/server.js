@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
+import expenseRoutes from "./routes/expenseRoutes.js";
 
 dotenv.config();
 
@@ -20,6 +21,9 @@ app.get("/api", (req, res) => {
     timestamp: new Date()
   });
 });
+
+// Mount Routes
+app.use("/api/expenses", expenseRoutes);
 
 // Connect to Database
 connectDB();
