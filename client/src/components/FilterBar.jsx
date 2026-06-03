@@ -1,4 +1,3 @@
-import React from "react";
 
 const DEFAULT_CATEGORIES = ["Food", "Transport", "Bills", "Entertainment", "Shopping", "Health", "Other"];
 const DEFAULT_ICONS = {
