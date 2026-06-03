@@ -4,6 +4,7 @@ import FilterBar from "./components/FilterBar";
 import SummaryCards from "./components/SummaryCards";
 import BudgetOverview from "./components/BudgetOverview";
 import CategoryBreakdown from "./components/CategoryBreakdown";
+import ExpenseList from "./components/ExpenseList";
 import "./App.css";
 
 const todayRelative = (daysAgo) => {
@@ -23,6 +24,7 @@ const SEED_DATA = [
 ];
 
 function App() {
+  const [view, setView] = useState("dashboard");
   const [filterRange, setFilterRange] = useState("this_month");
   const [filterCat, setFilterCat] = useState("All");
   const [customFrom, setCustomFrom] = useState("");
@@ -46,7 +48,11 @@ function App() {
 
   return (
     <>
-      <Navbar onAddExpense={() => console.log("Add Expense clicked")} />
+      <Navbar 
+        onAddExpense={() => console.log("Add Expense clicked")} 
+        currentView={view}
+        onViewChange={setView}
+      />
       <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto", width: "100%", boxSizing: "border-box" }}>
         <FilterBar
           filterRange={filterRange}
@@ -58,16 +64,37 @@ function App() {
           customTo={customTo}
           setCustomTo={setCustomTo}
         />
-        <SummaryCards
-          totalFiltered={totalFiltered}
-          filteredCount={filteredCount}
-          totalThisMonth={totalThisMonth}
-          thisMonthCount={thisMonthCount}
-          highestExpense={highestExpense}
-          avgPerDay={avgPerDay}
-        />
-        <BudgetOverview expenses={expenses} />
-        <CategoryBreakdown expenses={expenses} />
+        
+        {view === "dashboard" && (
+          <>
+            <SummaryCards
+              totalFiltered={totalFiltered}
+              filteredCount={filteredCount}
+              totalThisMonth={totalThisMonth}
+              thisMonthCount={thisMonthCount}
+              highestExpense={highestExpense}
+              avgPerDay={avgPerDay}
+            />
+            <BudgetOverview expenses={expenses} />
+            <CategoryBreakdown expenses={expenses} />
+          </>
+        )}
+
+        {view === "expenses" && (
+          <ExpenseList expenses={expenses} />
+        )}
+
+        {view === "budgets" && (
+          <BudgetOverview expenses={expenses} />
+        )}
+
+        {view === "analytics" && (
+          <div className="analytics-placeholder" style={{ padding: "40px", textAlign: "center", border: "1px dashed var(--border)", borderRadius: "12px", background: "var(--code-bg)" }}>
+            <span style={{ fontSize: "32px" }}>📊</span>
+            <h4 style={{ margin: "12px 0 6px 0", color: "var(--text-h)" }}>Analytics Dashboard</h4>
+            <p style={{ margin: 0, fontSize: "14px", color: "var(--text)" }}>Interactive Recharts visualizations are under construction.</p>
+          </div>
+        )}
       </div>
     </>
   );
