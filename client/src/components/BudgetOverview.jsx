@@ -34,6 +34,7 @@ export default function BudgetOverview({
   categories = [],
   catIcons = {},
   catColors = {},
+  onEditBudgets,
   currencyFormatter = (v) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(v)
 }) {
   const activeCategories = categories && categories.length > 0 ? categories : DEFAULT_CATEGORIES;
@@ -45,7 +46,18 @@ export default function BudgetOverview({
     <div className="budget-overview-container">
       <div className="budget-header">
         <h3 className="budget-title">Budget overview</h3>
-        <span className="budget-subtitle">Filtered period</span>
+        <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+          {onEditBudgets && (
+            <button 
+              onClick={onEditBudgets} 
+              className="btn-secondary"
+              style={{ padding: "6px 12px", fontSize: "12px", height: "fit-content" }}
+            >
+              🎯 Adjust Budgets
+            </button>
+          )}
+          <span className="budget-subtitle">Filtered period</span>
+        </div>
       </div>
       <div className="budget-grid">
         {activeCategories.map((cat) => {

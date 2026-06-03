@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import expenseRoutes from "./routes/expenseRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
+import budgetRoutes from "./routes/budgetRoutes.js";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.get("/api", (req, res) => {
 // Mount Routes
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/budgets", budgetRoutes);
 
 // Connect to Database
 connectDB();

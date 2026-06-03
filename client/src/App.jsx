@@ -6,7 +6,18 @@ import BudgetOverview from "./components/BudgetOverview";
 import CategoryBreakdown from "./components/CategoryBreakdown";
 import ExpenseList from "./components/ExpenseList";
 import ExpenseForm from "./components/ExpenseForm";
+import BudgetModal from "./components/BudgetModal";
 import "./App.css";
+
+const DEFAULT_BUDGETS = {
+  Food: 8000,
+  Transport: 3000,
+  Bills: 5000,
+  Entertainment: 2000,
+  Shopping: 4000,
+  Health: 2000,
+  Other: 1500,
+};
 
 function App() {
   const [view, setView] = useState("dashboard");
@@ -22,6 +33,10 @@ function App() {
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingExpense, setEditingExpense] = useState(null);
+
+  // Budget State
+  const [budgets, setBudgets] = useState(DEFAULT_BUDGETS);
+  const [isBudgetModalOpen, setIsBudgetModalOpen] = useState(false);
 
   // Fetch expenses on mount
   const fetchExpenses = async () => {
@@ -40,9 +55,27 @@ function App() {
     }
   };
 
+  const fetchBudgets = async () => {
+    try {
+      const res = await fetch("/api/budgets");
+      if (!res.ok) throw new Error("Failed to fetch budgets.");
+      const data = await res.json();
+      if (data && data.length > 0) {
+        const budgetMap = { ...DEFAULT_BUDGETS };
+        data.forEach((b) => {
+          budgetMap[b.category] = b.limit;
+        });
+        setBudgets(budgetMap);
+      }
+    } catch (err) {
+      console.error("Error loading budgets, using defaults:", err);
+    }
+  };
+
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchExpenses();
+    fetchBudgets();
   }, []);
 
   // CRUD Actions
@@ -77,6 +110,29 @@ function App() {
       setExpenses((prev) =>
         prev.map((e) => (e._id === id || e.id === id ? updatedExpense : e))
       );
+      return true;
+    } catch (err) {
+      alert(`Error: ${err.message}`);
+      return false;
+    }
+  };
+
+  const handleUpdateBudgets = async (updatedBudgets) => {
+    try {
+      const res = await fetch("/api/budgets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ budgets: updatedBudgets }),
+      });
+      if (!res.ok) throw new Error("Failed to save budgets.");
+      const data = await res.json();
+      if (data && data.length > 0) {
+        const budgetMap = { ...DEFAULT_BUDGETS };
+        data.forEach((b) => {
+          budgetMap[b.category] = b.limit;
+        });
+        setBudgets(budgetMap);
+      }
       return true;
     } catch (err) {
       alert(`Error: ${err.message}`);
@@ -232,7 +288,11 @@ function App() {
                   highestExpense={highestExpense}
                   avgPerDay={avgPerDay}
                 />
-                <BudgetOverview expenses={filteredExpenses} />
+                <BudgetOverview 
+                  expenses={filteredExpenses} 
+                  budgets={budgets} 
+                  onEditBudgets={() => setIsBudgetModalOpen(true)} 
+                />
                 <CategoryBreakdown expenses={filteredExpenses} />
               </>
             )}
@@ -249,7 +309,11 @@ function App() {
             )}
 
             {view === "budgets" && (
-              <BudgetOverview expenses={filteredExpenses} />
+              <BudgetOverview 
+                expenses={filteredExpenses} 
+                budgets={budgets} 
+                onEditBudgets={() => setIsBudgetModalOpen(true)} 
+              />
             )}
 
             {view === "analytics" && (
@@ -271,6 +335,13 @@ function App() {
         }}
         onSubmit={handleFormSubmit}
         expense={editingExpense}
+      />
+
+      <BudgetModal
+        isOpen={isBudgetModalOpen}
+        onClose={() => setIsBudgetModalOpen(false)}
+        onSubmit={handleUpdateBudgets}
+        currentBudgets={budgets}
       />
     </>
   );
