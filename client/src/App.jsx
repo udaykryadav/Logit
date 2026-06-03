@@ -52,9 +52,11 @@ function App() {
     const root = document.documentElement;
     if (theme === "dark") {
       root.classList.add("dark-theme");
+      root.classList.remove("light-theme");
       localStorage.setItem("theme", "dark");
     } else {
       root.classList.remove("dark-theme");
+      root.classList.add("light-theme");
       localStorage.setItem("theme", "light");
     }
   }, [theme]);

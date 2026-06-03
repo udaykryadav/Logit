@@ -31,7 +31,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light-theme) {
     --text: #9ca3af;
     --text-h: #f3f4f6;
     --bg: #16171d;
@@ -45,13 +45,16 @@
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
   }
 
-  #social .button-icon {
+  :root:not(.light-theme) #social .button-icon {
     filter: invert(1) brightness(2);
   }
 }
 
+html,
 body {
   margin: 0;
+  padding: 0;
+  min-height: 100%;
   background-color: var(--bg);
   color: var(--text);
   transition: background-color 0.3s, color 0.3s;
