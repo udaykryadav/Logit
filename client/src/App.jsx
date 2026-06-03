@@ -8,7 +8,7 @@ import ExpenseList from "./components/ExpenseList";
 import ExpenseForm from "./components/ExpenseForm";
 import BudgetModal from "./components/BudgetModal";
 import AnalyticsView from "./components/AnalyticsView";
-import "./App.css";
+
 
 const DEFAULT_BUDGETS = {
   Food: 8000,
