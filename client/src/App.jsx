@@ -38,6 +38,31 @@ function App() {
   const [budgets, setBudgets] = useState(DEFAULT_BUDGETS);
   const [isBudgetModalOpen, setIsBudgetModalOpen] = useState(false);
 
+  // Theme State
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("theme");
+      if (saved) return saved;
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    return "light";
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "dark") {
+      root.classList.add("dark-theme");
+      localStorage.setItem("theme", "dark");
+    } else {
+      root.classList.remove("dark-theme");
+      localStorage.setItem("theme", "light");
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
   // Fetch expenses on mount
   const fetchExpenses = async () => {
     try {
@@ -250,6 +275,8 @@ function App() {
         }} 
         currentView={view}
         onViewChange={setView}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
       <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto", width: "100%", boxSizing: "border-box" }}>
         <FilterBar

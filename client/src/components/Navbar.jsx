@@ -1,30 +1,10 @@
-import { useState, useEffect } from "react";
-
-export default function Navbar({ onAddExpense, currentView = "dashboard", onViewChange = () => {} }) {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("theme");
-      if (saved) return saved;
-      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    }
-    return "light";
-  });
-
-  useEffect(() => {
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark-theme");
-      localStorage.setItem("theme", "dark");
-    } else {
-      root.classList.remove("dark-theme");
-      localStorage.setItem("theme", "light");
-    }
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
-
+export default function Navbar({ 
+  onAddExpense, 
+  currentView = "dashboard", 
+  onViewChange = () => {},
+  theme = "light",
+  onToggleTheme = () => {}
+}) {
   return (
     <nav className="navbar-container">
       <div className="navbar-brand">
@@ -67,7 +47,7 @@ export default function Navbar({ onAddExpense, currentView = "dashboard", onView
         <button onClick={onAddExpense} className="btn-primary">
           + Add Expense
         </button>
-        <button onClick={toggleTheme} className="theme-toggle-btn" aria-label="Toggle theme">
+        <button onClick={onToggleTheme} className="theme-toggle-btn" aria-label="Toggle theme">
           {theme === "dark" ? "☀️" : "🌙"}
         </button>
         <div className="user-profile">
