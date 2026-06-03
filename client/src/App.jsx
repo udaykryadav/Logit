@@ -7,6 +7,7 @@ import CategoryBreakdown from "./components/CategoryBreakdown";
 import ExpenseList from "./components/ExpenseList";
 import ExpenseForm from "./components/ExpenseForm";
 import BudgetModal from "./components/BudgetModal";
+import AnalyticsView from "./components/AnalyticsView";
 import "./App.css";
 
 const DEFAULT_BUDGETS = {
@@ -346,11 +347,7 @@ function App() {
             )}
 
             {view === "analytics" && (
-              <div className="analytics-placeholder" style={{ padding: "40px", textAlign: "center", border: "1px dashed var(--border)", borderRadius: "12px", background: "var(--code-bg)" }}>
-                <span style={{ fontSize: "32px" }}>📊</span>
-                <h4 style={{ margin: "12px 0 6px 0", color: "var(--text-h)" }}>Analytics Dashboard</h4>
-                <p style={{ margin: 0, fontSize: "14px", color: "var(--text)" }}>Interactive Recharts visualizations are under construction.</p>
-              </div>
+              <AnalyticsView expenses={filteredExpenses} budgets={budgets} />
             )}
           </>
         )}
