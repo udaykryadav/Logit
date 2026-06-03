@@ -9,7 +9,8 @@ import ExpenseForm from "./components/ExpenseForm";
 import BudgetModal from "./components/BudgetModal";
 import AnalyticsView from "./components/AnalyticsView";
 
-
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+//prduction changes
 const DEFAULT_BUDGETS = {
   Food: 8000,
   Transport: 3000,
@@ -71,7 +72,9 @@ function App() {
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch("/api/expenses");
+      // const res = await fetch("/api/expenses");
+      // production changes   
+      const res = await fetch(`${API_BASE_URL}/api/expenses`);
       if (!res.ok) throw new Error("Failed to fetch expenses from backend server.");
       const data = await res.json();
       setExpenses(data);
@@ -85,7 +88,9 @@ function App() {
 
   const fetchBudgets = async () => {
     try {
-      const res = await fetch("/api/budgets");
+      //const res = await fetch("/api/budgets");
+      // production changes
+      const res = await fetch(`${API_BASE_URL}/api/budgets`);
       if (!res.ok) throw new Error("Failed to fetch budgets.");
       const data = await res.json();
       if (data && data.length > 0) {
@@ -109,7 +114,9 @@ function App() {
   // CRUD Actions
   const handleAddExpense = async (expenseData) => {
     try {
-      const res = await fetch("/api/expenses", {
+      // const res = await fetch("/api/expenses", {
+      // production changes
+      const res = await fetch(`${API_BASE_URL}/api/expenses`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(expenseData),
@@ -128,7 +135,10 @@ function App() {
     if (!editingExpense) return false;
     const id = editingExpense._id || editingExpense.id;
     try {
-      const res = await fetch(`/api/expenses/${id}`, {
+
+      // const res = await fetch(`/api/expenses/${id}`, {
+      // production changes
+      const res = await fetch(`${API_BASE_URL}/api/expenses/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(expenseData),
@@ -147,7 +157,9 @@ function App() {
 
   const handleUpdateBudgets = async (updatedBudgets) => {
     try {
-      const res = await fetch("/api/budgets", {
+      // const res = await fetch("/api/budgets", {
+      // production changes
+      const res = await fetch(`${API_BASE_URL}/api/budgets`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ budgets: updatedBudgets }),
@@ -171,7 +183,9 @@ function App() {
   const handleDeleteExpense = async (id) => {
     if (!window.confirm("Are you sure you want to delete this expense?")) return;
     try {
-      const res = await fetch(`/api/expenses/${id}`, {
+      // const res = await fetch(`/api/expenses/${id}`, {
+      // production changes
+      const res = await fetch(`${API_BASE_URL}/api/expenses/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Failed to delete expense.");
