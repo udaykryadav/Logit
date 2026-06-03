@@ -23,6 +23,7 @@ export default function FilterBar({
   catIcons = {},
   onExportCSV,
   onOpenBudgets,
+  onOpenExpenses,
   today = () => new Date().toISOString().split("T")[0]
 }) {
   const activeCategories = categories && categories.length > 0 ? categories : DEFAULT_CATEGORIES;
@@ -87,11 +88,16 @@ export default function FilterBar({
 
       {/* Action Buttons */}
       <div className="action-group">
-        <button onClick={onExportCSV} className="btn-secondary" title="Export to CSV">
-          <span className="btn-icon">↓</span> Export CSV
-        </button>
+        {onOpenExpenses && (
+          <button onClick={onOpenExpenses} className="btn-secondary" title="View Expenses">
+            <span className="btn-icon">💸</span> Expenses
+          </button>
+        )}
         <button onClick={onOpenBudgets} className="btn-secondary" title="Manage Budgets">
           <span className="btn-icon">🎯</span> Budgets
+        </button>
+        <button onClick={onExportCSV} className="btn-secondary" title="Export to CSV">
+          <span className="btn-icon">↓</span> Export CSV
         </button>
       </div>
     </div>

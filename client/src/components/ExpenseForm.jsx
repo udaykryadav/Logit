@@ -3,6 +3,14 @@ import { useState, useEffect } from "react";
 
 const DEFAULT_CATEGORIES = ["Food", "Transport", "Bills", "Entertainment", "Shopping", "Health", "Other"];
 
+const getLocalDateString = () => {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
 export default function ExpenseForm({
   isOpen,
   onClose,
@@ -12,7 +20,7 @@ export default function ExpenseForm({
 }) {
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState(categories[0]);
-  const [date, setDate] = useState(() => new Date().toISOString().split("T")[0]);
+  const [date, setDate] = useState(() => getLocalDateString());
   const [note, setNote] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationError, setValidationError] = useState("");
@@ -22,12 +30,12 @@ export default function ExpenseForm({
     if (expense) {
       setAmount(expense.amount || "");
       setCategory(expense.category || categories[0]);
-      setDate(expense.date || new Date().toISOString().split("T")[0]);
+      setDate(expense.date || getLocalDateString());
       setNote(expense.note || "");
     } else {
       setAmount("");
       setCategory(categories[0]);
-      setDate(new Date().toISOString().split("T")[0]);
+      setDate(getLocalDateString());
       setNote("");
     }
     setValidationError("");
@@ -51,6 +59,11 @@ export default function ExpenseForm({
     }
     if (!date) {
       setValidationError("Please select a date.");
+      return;
+    }
+    const todayStr = getLocalDateString();
+    if (date > todayStr) {
+      setValidationError("Date cannot be in the future.");
       return;
     }
 
@@ -142,6 +155,7 @@ export default function ExpenseForm({
               id="date"
               className="form-input"
               value={date}
+              max={getLocalDateString()}
               onChange={(e) => setDate(e.target.value)}
               required
               disabled={isSubmitting}

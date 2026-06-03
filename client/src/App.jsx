@@ -293,6 +293,7 @@ function App() {
           setCustomTo={setCustomTo}
           onExportCSV={handleExportCSV}
           onOpenBudgets={() => setView("budgets")}
+          onOpenExpenses={() => setView("expenses")}
         />
 
         {error && (
